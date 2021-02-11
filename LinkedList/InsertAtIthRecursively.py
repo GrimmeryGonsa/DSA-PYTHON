@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self,data):
+    def __init__(self, data) -> None:
         self.data = data
         self.next = None
 
@@ -27,39 +27,28 @@ def printLL(head) -> None:
     print('None')
     return
 
-def length(head) -> Node:
-    count = 0
-    while head is not None:
-        count = count + 1
-        head = head.next 
-    return count
-def insertAtIth(head, pos, data) -> Node:
-    if pos<0 and pos> length(head) :
+
+def RecursiveInsert(head, curr, data)-> Node:
+    if curr<0:
         return head
-    count = 0
-    prev = None
-    curr = head
-
-    while count < pos:
-        prev = curr
-        curr = curr.next
-        count = count+1
-    newNode = Node(data)
-    if prev is not None:
-        prev.next = newNode
-    else:
+    if curr == 0:
+        newNode = Node(data)
+        newNode.next = head
         head = newNode
-    newNode.next = curr
-
+        return head
+    newNode = RecursiveInsert(head.next, curr -1, data)
+    head.next = newNode
     return head
 
+
+    
 
 
 head = takeInput()
 printLL(head)
-data = int(input("Enter the data to be added\n"))
-pos = int(input("Ener the position to be added at\n"))
-head = insertAtIth(head, pos, data)
+data = int(input("Enter data to be added\n"))
+curr = int(input("Enter position to be added at\n"))
+head = RecursiveInsert(head, curr, data)
 printLL(head)
         
             
